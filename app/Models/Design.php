@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use PhpParser\Builder\Function_;
 
@@ -43,5 +44,10 @@ class Design extends Model
     public function images(): HasMany
     {
         return $this->hasMany(DesignImage::class)->orderBy('sort_order');
+    }
+
+    public function articals():BelongsToMany
+    {
+        return $this->belongsToMany(Article::class)->withTimestamps();
     }
 }
