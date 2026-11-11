@@ -6,20 +6,31 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('static_pages', function (Blueprint $table) {
             $table->id();
+
+            $table->string('title');
+            $table->string('slug')->unique();
+
+            $table->string('featured_image')->nullable();
+
+            $table->longText('content')->nullable();
+
+            $table->string('status')->default('draft');
+
+            $table->string('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
+
+            $table->unsignedInteger('sort_order')->default(0);
+
             $table->timestamps();
+
+            $table->index('status');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('static_pages');
