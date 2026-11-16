@@ -4,7 +4,7 @@
 @section('meta_description', $category->description ?: 'Explore ' . $category->name . ' fashion designs at ÉLORA.')
 
 @section('content')
-
+    @include('partials.advertisements', ['placement' => 'category_top'])
     {{-- Category Hero --}}
     <section class="page-hero">
         <span class="eyebrow">ÉLORA / The edit</span>

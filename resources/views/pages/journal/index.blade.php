@@ -37,7 +37,7 @@
     @endpush
 
 @section('content')
-
+@include('partials.advertisements', ['placement' => 'journal_top'])
     <section class="page-hero">
         <span class="eyebrow">ÉLORA / Notes & Perspectives</span>
 

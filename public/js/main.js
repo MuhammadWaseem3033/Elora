@@ -326,3 +326,97 @@ document.addEventListener('DOMContentLoaded', initializePage);
         }
     });
 })();
+
+
+/* =====================================
+   ÉLORA NEWSLETTER SUBSCRIPTION
+===================================== */
+
+document.addEventListener('submit', async function (event) {
+    const form = event.target.closest('#newsletterForm');
+
+    if (!form) return;
+
+    event.preventDefault();
+
+    const submitButton = form.querySelector('#newsletterSubmit');
+    const messageElement = form.querySelector('#newsletterMessage');
+    const emailInput = form.querySelector('input[name="email"]');
+
+    const originalButtonText = submitButton.textContent;
+
+    messageElement.textContent = '';
+    messageElement.className = 'newsletter-message';
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Subscribing...';
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: new FormData(form)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            if (response.status === 422 && data.errors) {
+                const firstError = Object.values(data.errors)[0][0];
+                throw new Error(firstError);
+            }
+
+            throw new Error(data.message || 'Something went wrong.');
+        }
+
+        messageElement.textContent = data.message;
+        messageElement.classList.add('success');
+
+        form.reset();
+
+    } catch (error) {
+        messageElement.textContent = error.message;
+        messageElement.classList.add('error');
+
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
+    }
+});
+
+/* =====================================
+   ÉLORA AD CLICK TRACKING
+===================================== */
+
+document.addEventListener('click', function (event) {
+    const adLink = event.target.closest(
+        '.elora-ad-item[data-ad-click-url] a'
+    );
+
+    if (!adLink) return;
+
+    const adContainer = adLink.closest('.elora-ad-item');
+    const clickUrl = adContainer?.dataset.adClickUrl;
+
+    if (!clickUrl) return;
+
+    const csrfToken = document.querySelector(
+        'meta[name="csrf-token"]'
+    )?.content;
+
+    if (!csrfToken) return;
+
+    fetch(clickUrl, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        keepalive: true
+    }).catch(error => {
+        console.error('Ad click tracking failed:', error);
+    });
+});

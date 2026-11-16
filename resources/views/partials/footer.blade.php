@@ -54,7 +54,8 @@
             </div>
 
         </div>
-
+        
+        @include('partials.newsletter-form')
         <div class="copyright">
             © {{ date('Y') }} ÉLORA Style Journal.
             All rights reserved.

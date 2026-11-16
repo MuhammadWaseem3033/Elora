@@ -17,15 +17,6 @@
             @endforeach
 
             <a href="{{ route('journal.index') }}">Journal</a>
-            {{-- <a href="{{ route('page.show', 'about') }}">About</a>
-            <a href="{{ route('page.show', 'about') }}">About</a>
-            <a href="{{ route('page.show', 'about') }}">About</a>
-            <a href="{{ route('page.show', 'about') }}">About</a>
-            <a href="{{ route('page.show', 'about') }}">About</a> --}}
-            {{-- @dd($headerPage) --}}
-            {{-- @foreach ($headerPage as $page)
-                <a href="{{ route('page.show', 'about') }}">{{ $page }}</a>
-            @endforeach --}}
             @if ($headerPage)
                 <a href="{{ route('page.show', $headerPage->slug) }}">
                     {{ $headerPage->title }}

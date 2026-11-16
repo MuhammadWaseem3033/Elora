@@ -5,7 +5,7 @@
 @section('meta_description', $design->meta_description ?: $design->short_description)
 
 @section('content')
-
+    @include('partials.advertisements', ['placement' => 'design_detail_top'])
     <section class="page-hero">
         <span class="eyebrow">
             ÉLORA /

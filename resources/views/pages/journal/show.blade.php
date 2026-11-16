@@ -5,7 +5,7 @@
 @section('meta_description', $article->meta_description ?: $article->excerpt)
 
 @section('content')
-
+    @include('partials.advertisements', ['placement' => 'journal_detail_top'])
     <section class="page-hero">
         <span class="eyebrow">ÉLORA / Journal / Article</span>
 

@@ -710,3 +710,155 @@ body.lightbox-active {
         height: 190px;
     }
 }
+
+
+/* =====================================
+   ÉLORA NEWSLETTER
+===================================== */
+
+.elora-newsletter {
+    margin-top: 2%;
+    padding: 65px 20px;
+    background: #f5f0e9;
+}
+
+.newsletter-content {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.newsletter-text {
+    max-width: 480px;
+}
+
+.newsletter-subtitle {
+    display: block;
+    margin-bottom: 12px;
+    color: #9b7950;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.newsletter-text h2 {
+    margin-bottom: 12px;
+    color: #3d202b;
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+}
+
+.newsletter-text p {
+    margin: 0;
+    color: #71666a;
+    line-height: 1.7;
+}
+
+.newsletter-form {
+    width: 100%;
+    max-width: 480px;
+}
+
+.newsletter-input-group {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #9b7950;
+}
+
+.newsletter-input-group input {
+    flex: 1;
+    min-width: 0;
+    padding: 15px 5px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #3d202b;
+}
+
+.newsletter-input-group button {
+    padding: 14px 22px;
+    border: none;
+    background: #492632;
+    color: #fff;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.newsletter-input-group button:hover {
+    background: #9b7950;
+}
+
+.newsletter-input-group button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.newsletter-message {
+    min-height: 22px;
+    margin-top: 12px;
+    font-size: 13px;
+}
+
+.newsletter-message.success {
+    color: #237747;
+}
+
+.newsletter-message.error {
+    color: #b42318;
+}
+
+@media (max-width: 768px) {
+    .newsletter-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 25px;
+    }
+
+    .newsletter-text h2 {
+        font-size: 28px;
+    }
+
+    .newsletter-input-group button {
+        padding: 12px 15px;
+    }
+}
+
+/* =====================================
+   ÉLORA ADVERTISEMENTS
+===================================== */
+
+.elora-ads-container {
+    width: 100%;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.elora-ad-item {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto 20px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.elora-ad-item img {
+    max-width: 100%;
+    height: auto;
+}
+
+.elora-ad-item iframe {
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .elora-ads-container {
+        margin: 20px auto;
+    }
+
+    .elora-ad-item {
+        margin-bottom: 15px;
+    }
+}

@@ -27,12 +27,22 @@ class AdvertisementForm
                     Select::make('placement')
                         ->label('Advertisement Placement')
                         ->options([
-                            'header' => 'Header',
-                            'sidebar' => 'Sidebar',
-                            'in_article' => 'In Article',
-                            'between_designs' => 'Between Designs',
-                            'footer' => 'Footer',
+                            'home_top' => 'Homepage - Top',
+                            'home_bottom' => 'Homepage - Bottom',
+
+                            'category_top' => 'Category - Top',
+                            'category_bottom' => 'Category - Bottom',
+
+                            'design_detail_top' => 'Design Detail - Top',
+                            'design_detail_bottom' => 'Design Detail - Bottom',
+
+                            'journal_top' => 'Journal - Top',
+                            'journal_bottom' => 'Journal - Bottom',
+
+                            'journal_detail_top' => 'Journal Detail - Top',
+                            'journal_detail_bottom' => 'Journal Detail - Bottom',
                         ])
+                        ->searchable()
                         ->required(),
 
                     Textarea::make('ad_code')
@@ -55,10 +65,13 @@ class AdvertisementForm
                 ->schema([
 
                     DateTimePicker::make('start_date')
-                        ->label('Start Date'),
+                        ->label('Start Date')
+                        ->seconds(false),
 
                     DateTimePicker::make('end_date')
-                        ->label('End Date'),
+                        ->label('End Date')
+                        ->seconds(false)
+                        ->after('start_date'),
 
                 ])->columns(2),
 

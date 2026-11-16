@@ -20,6 +20,17 @@ class AdvertisementsTable
                     ->searchable(),
                 TextColumn::make('placement')
                     ->searchable(),
+
+                TextColumn::make('impressions')
+                    ->label('Impressions')
+                    ->numeric()
+                    ->sortable(),
+
+                TextColumn::make('clicks')
+                    ->label('Clicks')
+                    ->numeric()
+                    ->sortable(),
+
                 IconColumn::make('is_active')
                     ->boolean(),
                 TextColumn::make('start_date')
