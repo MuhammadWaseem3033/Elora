@@ -15,10 +15,11 @@ class DesignImage extends Model
         'sort_order',
     ];
 
-    #[Override]
-    public function casts(): array
+    protected function casts(): array
     {
-        return parent::casts();
+        return [
+            'sort_order' => 'integer',
+        ];
     }
 
     public function design(): BelongsTo

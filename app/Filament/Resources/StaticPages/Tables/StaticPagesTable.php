@@ -28,6 +28,11 @@ class StaticPagesTable
                     ->searchable()
                     ->sortable(),
 
+                // TextColumn::make('content')
+                //     ->label('content')
+                //     ->searchable()
+                //     ->sortable(),
+
                 TextColumn::make('slug')
                     ->searchable()
                     ->sortable()
@@ -35,7 +40,7 @@ class StaticPagesTable
 
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'published' => 'success',
                         'draft' => 'warning',
                         default => 'gray',
