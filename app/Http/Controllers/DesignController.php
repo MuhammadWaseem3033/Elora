@@ -24,6 +24,17 @@ class DesignController extends Controller
             ])
             ->firstOrFail();
 
+        // For Design Views Count Uniqe  
+        $viewedDesigns = session()->get('viewed_designs', []);
+
+        if (!in_array($design->id, $viewedDesigns)) {
+            $design->increment('views');
+
+            $viewedDesigns[] = $design->id;
+
+            session()->put('viewed_designs', $viewedDesigns);
+        }
+
         // Related Designs
         $relatedDesigns = Design::query()
             ->where('category_id', $design->category_id)

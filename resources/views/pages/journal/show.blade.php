@@ -4,6 +4,77 @@
 
 @section('meta_description', $article->meta_description ?: $article->excerpt)
 
+
+@section('canonical_url', route('journal.show', $article->slug))
+
+@section('meta_image', $article->featured_image ? asset($article->featured_image) : '')
+
+@section('og_type', 'article')
+
+@php
+    $articleSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Article',
+        'headline' => $article->title,
+        'description' => $article->excerpt ?: $article->title,
+        'url' => route('journal.show', $article->slug),
+        'image' => $article->featured_image ? asset($article->featured_image) : null,
+        'datePublished' => $article->published_at ? $article->published_at->toAtomString() : null,
+        'dateModified' => $article->updated_at->toAtomString(),
+        'author' => [
+            '@type' => 'Person',
+            'name' => $article->author ?: 'ÉLORA Editorial Team',
+        ],
+        'publisher' => [
+            '@type' => 'Organization',
+            'name' => 'ÉLORA',
+            'url' => config('app.url'),
+        ],
+        'mainEntityOfPage' => [
+            '@type' => 'WebPage',
+            '@id' => route('journal.show', $article->slug),
+        ],
+    ];
+
+    $articleSchemaJson = json_encode($articleSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+    $articleBreadcrumb = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Home',
+                'item' => route('home'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Journal',
+                'item' => route('journal.index'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => $article->title,
+                'item' => route('journal.show', $article->slug),
+            ],
+        ],
+    ];
+
+    $articleBreadcrumbJson = json_encode($articleBreadcrumb, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+@endphp
+
+<script type="application/ld+json">
+    {!! $articleSchemaJson !!}
+</script>
+
+<script type="application/ld+json">
+    {!! $articleBreadcrumbJson !!}
+</script>
+
+
 @section('content')
     @include('partials.advertisements', ['placement' => 'journal_detail_top'])
     <section class="page-hero">

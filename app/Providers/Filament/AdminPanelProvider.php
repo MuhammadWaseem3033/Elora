@@ -8,6 +8,7 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 // use Filament\Pages\Dashboard;
 use App\Filament\Pages\Dashboard;
+use App\Filament\Widgets\EloraStatsOverview;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -32,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(null)
             ->login()
             ->colors([
-                'primary' => Color::Amber,                
+                'primary' => Color::Amber,
             ])
             ->discoverResources(
                 in: app_path('Filament/Resources'),
@@ -53,8 +54,12 @@ class AdminPanelProvider extends PanelProvider
                 'Website Management',
                 'Settings',
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+            ->discoverWidgets(
+                in: app_path('Filament/Widgets'),
+                for: 'App\Filament\Widgets'
+            )
             ->widgets([
+                \App\Filament\Widgets\EloraStatsOverview::class,
                 AccountWidget::class,
                 FilamentInfoWidget::class,
             ])

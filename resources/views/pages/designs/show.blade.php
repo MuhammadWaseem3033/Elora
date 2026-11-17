@@ -4,6 +4,69 @@
 
 @section('meta_description', $design->meta_description ?: $design->short_description)
 
+
+@section('canonical_url', route('design.show', $design->slug))
+
+@section('meta_image', $design->featured_image ? asset($design->featured_image) : '')
+
+@section('og_type', 'article')
+
+@php
+    $designSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'CreativeWork',
+        'name' => $design->title,
+        'description' => $design->short_description ?: $design->title,
+        'url' => route('design.show', $design->slug),
+        'image' => $design->featured_image ? asset($design->featured_image) : null,
+        'creator' => $design->designer ?: 'ÉLORA Editorial Team',
+        'genre' => $design->category->name,
+        'publisher' => [
+            '@type' => 'Organization',
+            'name' => 'ÉLORA',
+            'url' => config('app.url'),
+        ],
+    ];
+
+    $designSchemaJson = json_encode($designSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+    $designBreadcrumb = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Home',
+                'item' => route('home'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => $design->category->name,
+                'item' => route('category.show', $design->category->slug),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => $design->title,
+                'item' => route('design.show', $design->slug),
+            ],
+        ],
+    ];
+
+    $designBreadcrumbJson = json_encode($designBreadcrumb, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+@endphp
+
+<script type="application/ld+json">
+    {!! $designSchemaJson !!}
+</script>
+
+<script type="application/ld+json">
+    {!! $designBreadcrumbJson !!}
+</script>
+
+
 @section('content')
     @include('partials.advertisements', ['placement' => 'design_detail_top'])
     <section class="page-hero">

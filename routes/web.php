@@ -7,6 +7,8 @@ use App\Http\Controllers\DesignController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JournalController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StaticPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,3 +54,12 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])
 Route::post('/advertisements/{advertisement}/click', [AdvertisementController::class, 'click'])
     ->middleware('throttle:60,1')
     ->name('advertisement.click');
+
+Route::get('/search', [SearchController::class, 'index'])
+    ->name('search.index');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])
+    ->name('sitemap');
+
+Route::get('/robots.txt', [SitemapController::class, 'robots'])
+    ->name('robots');
