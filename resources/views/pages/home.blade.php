@@ -57,7 +57,12 @@
                 <a class="category-card" href="{{ url('/category/' . $category->slug) }}">
 
                     @if ($category->image)
-                        <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
+                        <img
+                            src="{{ asset($category->image) }}"
+                            alt="{{ $category->name }}"
+                            loading="lazy"
+                            decoding="async"
+                        >
                     @endif
 
                     <div class="card-label">
@@ -111,7 +116,12 @@
                 <a class="story-card" href="{{ url('/journal/' . $article->slug) }}">
 
                     @if ($article->featured_image)
-                        <img src="{{ asset($article->featured_image) }}" alt="{{ $article->title }}">
+                        <img
+                            src="{{ asset($article->featured_image) }}"
+                            alt="{{ $article->title }}"
+                            loading="lazy"
+                            decoding="async"
+                        >
                     @endif
 
                     <span class="meta">

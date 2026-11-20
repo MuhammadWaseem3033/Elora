@@ -94,7 +94,12 @@
                         <article class="design-card" data-searchable>
 
                             @if ($article->featured_image)
-                                <img src="{{ asset($article->featured_image) }}" alt="{{ $article->title }}" loading="lazy">
+                                <img 
+                                    src="{{ asset($article->featured_image) }}" 
+                                    alt="{{ $article->title }}" 
+                                    loading="lazy"
+                                    decoding="async"
+                                >
                             @endif
 
                             <span class="meta">

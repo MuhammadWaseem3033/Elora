@@ -44,6 +44,9 @@ class DesignController extends Controller
                 $query->whereNull('published_at')
                     ->orWhere('published_at', '<=', now());
             })
+            ->whereHas('category', function ($query) {
+                $query->where('is_active', true);
+            })
             ->orderByDesc('is_featured')
             ->orderBy('sort_order')
             ->take(4)

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Mews\Purifier\Casts\CleanHtmlInput;
 
 class Design extends Model
 {
@@ -32,6 +33,8 @@ class Design extends Model
             'is_featured' => 'boolean',
             'published_at' => 'datetime',
             'sort_order' => 'integer',
+            'description' => CleanHtmlInput::class,
+
         ];
     }
 
@@ -45,7 +48,7 @@ class Design extends Model
         return $this->hasMany(DesignImage::class)->orderBy('sort_order');
     }
 
-    public function articals():BelongsToMany
+    public function articles(): BelongsToMany
     {
         return $this->belongsToMany(Article::class)->withTimestamps();
     }

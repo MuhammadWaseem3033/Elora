@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Mews\Purifier\Casts\CleanHtmlInput;
 
 class StaticPage extends Model
 {
@@ -21,6 +22,7 @@ class StaticPage extends Model
     {
         return [
             'sort_order' => 'integer',
+            'content' => CleanHtmlInput::class,
         ];
     }
 }

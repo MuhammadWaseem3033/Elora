@@ -10,10 +10,14 @@ class NewsletterController extends Controller
 {
     public function store(Request $request)
     {
+        $request->merge([
+            'email' => strtolower(trim((string) $request->input('email'))),
+        ]);
+
         $validated = $request->validate([
             'email' => [
                 'required',
-                'email',
+                'email:rfc',
                 'max:255',
                 Rule::unique('newsletter_subscribers', 'email'),
             ],
@@ -24,7 +28,7 @@ class NewsletterController extends Controller
         ]);
 
         NewsletterSubscriber::create([
-            'email' => strtolower(trim($validated['email'])),
+            'email' => $validated['email'],
             'is_active' => true,
             'subscribed_at' => now(),
         ]);

@@ -98,8 +98,14 @@
 
                 @if ($design->featured_image)
                     <div class="mb-4">
-                        <img src="{{ asset($design->featured_image) }}" alt="{{ $design->title }}"
-                            style="width:100%; max-height:650px; object-fit:cover;">
+                        <img 
+                            src="{{ asset($design->featured_image) }}" 
+                            alt="{{ $design->title }}" fetchpriority="high"
+                            decoding="async" 
+                            style="width:100%; max-height:650px; object-fit:cover;"
+                        >
+                        {{-- <img src="{{ asset($design->featured_image) }}" alt="{{ $design->title }}"
+                            style="width:100%; max-height:650px; object-fit:cover;"> --}}
                     </div>
                 @endif
 
@@ -109,8 +115,15 @@
 
                         @foreach ($design->images as $image)
                             <div class="col-md-6">
-                                <img src="{{ asset($image->image) }}" alt="{{ $image->alt_text ?: $design->title }}"
-                                    loading="lazy" style="width:100%; height:350px; object-fit:cover;">
+                                <img
+                                    src="{{ asset($image->image) }}"
+                                    alt="{{ $image->alt_text ?: $design->title }}"
+                                    loading="lazy"
+                                    decoding="async"
+                                    style="width:100%; height:350px; object-fit:cover;"
+                                >
+                                {{-- <img src="{{ asset($image->image) }}" alt="{{ $image->alt_text ?: $design->title }}"
+                                    loading="lazy" style="width:100%; height:350px; object-fit:cover;"> --}}
                             </div>
                         @endforeach
 

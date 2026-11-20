@@ -22,7 +22,8 @@ class ArticlesTable
                 ImageColumn::make('featured_image')
                     ->label('Image')
                     ->disk('public_uploads')
-                    ->square(),
+                    ->square()
+                    ->size(80),
 
                 TextColumn::make('title')
                     ->label('Article Title')

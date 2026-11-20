@@ -16,11 +16,15 @@ class JournalController extends Controller
                 $query->whereNull('published_at')
                     ->orWhere('published_at', '<=', now());
             })
+            ->whereHas('blogCategory', function ($query) {
+                $query->where('is_active', true);
+            })
             ->with([
                 'blogCategory:id,name,slug',
                 'designs',
             ])
             ->firstOrFail();
+
         $relatedArticles = Article::query()
             ->where('blog_category_id', $article->blog_category_id)
             ->where('id', '!=', $article->id)
@@ -28,6 +32,9 @@ class JournalController extends Controller
             ->where(function ($query) {
                 $query->whereNull('published_at')
                     ->orWhere('published_at', '<=', now());
+            })
+            ->whereHas('blogCategory', function ($query) {
+                $query->where('is_active', true);
             })
             ->latest('published_at')
             ->take(3)

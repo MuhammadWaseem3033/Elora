@@ -12,8 +12,17 @@ class CategoryController extends Controller
         $category = Category::query()
             ->where('slug', $slug)
             ->where('is_active', true)
+            // ->with(['designs' => function ($query) {
+            //     $query->where('status', 'published')
+            //         ->orderBy('sort_order')
+            //         ->latest();
+            // }])
             ->with(['designs' => function ($query) {
                 $query->where('status', 'published')
+                    ->where(function ($query) {
+                        $query->whereNull('published_at')
+                            ->orWhere('published_at', '<=', now());
+                    })
                     ->orderBy('sort_order')
                     ->latest();
             }])

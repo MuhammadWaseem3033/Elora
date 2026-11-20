@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Mews\Purifier\Casts\CleanHtmlInput;
 
 class Article extends Model
 {
@@ -30,6 +31,7 @@ class Article extends Model
             'is_featured' => 'boolean',
             'published_at' => 'datetime',
             'sort_order' => 'integer',
+            'content' => CleanHtmlInput::class,
         ];
     }
 

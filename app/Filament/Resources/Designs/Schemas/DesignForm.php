@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Designs\Schemas;
 
 use App\Models\Category;
+use App\Services\ImageOptimizer;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
@@ -73,6 +74,15 @@ class DesignForm
                             ->directory('images/designs')
                             ->visibility('public')
                             ->maxSize(4096)
+                            ->saveUploadedFileUsing(
+                                fn($file): string => app(ImageOptimizer::class)->optimize(
+                                    $file,
+                                    'images/designs',
+                                    2000,
+                                    2000,
+                                    80
+                                )
+                            )
                             ->required(),
 
                         TextInput::make('designer')
@@ -132,10 +142,20 @@ class DesignForm
                                 FileUpload::make('image')
                                     ->label('Image')
                                     ->image()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                     ->disk('public_uploads')
                                     ->directory('images/designs/gallery')
                                     ->visibility('public')
                                     ->maxSize(4096)
+                                    ->saveUploadedFileUsing(
+                                        fn($file): string => app(ImageOptimizer::class)->optimize(
+                                            $file,
+                                            'images/designs',
+                                            2000,
+                                            2000,
+                                            80
+                                        )
+                                    )
                                     ->required(),
 
                                 TextInput::make('alt_text')

@@ -32,6 +32,10 @@ class HomeController extends Controller
                 )
                 ->where('status', 'published')
                 ->where('is_featured', true)
+                ->where(function ($query) {
+                    $query->whereNull('published_at')
+                        ->orWhere('published_at', '<=', now());
+                })
                 ->whereHas('category', function ($query) {
                     $query->where('is_active', true);
                 })
@@ -54,6 +58,9 @@ class HomeController extends Controller
                     'published_at'
                 )
                 ->where('status', 'published')
+                ->whereHas('blogCategory', function ($query) {
+                    $query->where('is_active', true);
+                })
                 ->where(function ($query) {
                     $query->whereNull('published_at')
                         ->orWhere('published_at', '<=', now());

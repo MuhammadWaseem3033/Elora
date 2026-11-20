@@ -40,7 +40,12 @@
                             @endphp
 
                             @if ($image)
-                                <img src="{{ asset($image) }}" alt="{{ $design->title }}" loading="lazy">
+                                <img 
+                                    src="{{ asset($image) }}" 
+                                    alt="{{ $design->title }}" 
+                                    loading="lazy"
+                                    decoding="async"
+                                >
                             @endif
 
                             <span class="meta">

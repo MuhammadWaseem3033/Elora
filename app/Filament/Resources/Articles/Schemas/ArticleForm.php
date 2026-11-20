@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Articles\Schemas;
 
+use App\Services\ImageOptimizer;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
@@ -106,7 +107,16 @@ class ArticleForm
                             ->disk('public_uploads')
                             ->directory('images/articles')
                             ->visibility('public')
-                            ->maxSize(4096),
+                            ->maxSize(4096)
+                            ->saveUploadedFileUsing(
+                                fn($file): string => app(ImageOptimizer::class)->optimize(
+                                    $file,
+                                    'images/articles',
+                                    2000,
+                                    2000,
+                                    80
+                                )
+                            ),
 
                         TextInput::make('author')
                             ->label('Author Name')

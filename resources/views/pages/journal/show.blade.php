@@ -112,8 +112,11 @@
 
         @if ($article->featured_image)
             <div class="mb-5">
-                <img src="{{ asset($article->featured_image) }}" alt="{{ $article->title }}"
-                    style="width:100%; max-height:550px; object-fit:cover;">
+                @if ($article->featured_image)
+                    <img src="{{ asset($article->featured_image) }}" alt="{{ $article->title }}"
+                        style="width:100%; max-height:550px; object-fit:cover;" fetchpriority="high" decoding="async">
+                @endif
+
             </div>
         @endif
 
@@ -146,8 +149,13 @@
                     <a href="{{ route('journal.show', $related->slug) }}" class="design-card">
 
                         @if ($related->featured_image)
-                            <img src="{{ asset($related->featured_image) }}" alt="{{ $related->title }}">
-                        @endif
+                            <img 
+                                src="{{ asset($related->featured_image) }}" 
+                                alt="{{ $related->title }}"
+                                loading="lazy" 
+                                decoding="async"
+                            >
+                        @endif                       
 
                         <span class="meta">
                             {{ $related->blogCategory?->name }}

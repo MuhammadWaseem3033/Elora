@@ -1,0 +1,49 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+/* ÉLORA Dashboard Stats Cards */
+
+.fi-wi-stats-overview-stat {
+    border: 1px solid #e8dccb !important;
+    border-radius: 16px !important;
+    background: linear-gradient(145deg, #ffffff, #faf6f0) !important;
+    box-shadow: 0 5px 18px rgba(55, 35, 30, 0.06) !important;
+    transition: all 0.3s ease;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(82, 44, 53, 0.12) !important;
+}
+
+.fi-wi-stats-overview-stat .fi-wi-stats-overview-stat-value {
+    color: #522c35 !important;
+    font-size: 30px !important;
+    font-weight: 700 !important;
+}
+
+.fi-wi-stats-overview-stat .fi-wi-stats-overview-stat-label {
+    color: #75675d !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px;
+}
+
+.fi-wi-stats-overview-stat .fi-wi-stats-overview-stat-description {
+    color: #a47d4d !important;
+}
+
+/* ÉLORA - Consistent Luxury Icon Colors */
+
+.fi-wi-stats-overview-stat svg {
+    color: #a47d4d !important;
+}
+
+.fi-wi-stats-overview-stat .fi-wi-stats-overview-stat-description-icon {
+    color: #a47d4d !important;
+}
+
+/* Subtle icon background */
+.fi-wi-stats-overview-stat .fi-wi-stats-overview-stat-icon {
+    color: #a47d4d !important;
+}

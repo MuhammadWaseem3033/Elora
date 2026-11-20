@@ -17,19 +17,20 @@
         @if ($page->featured_image)
             <div class="mb-5">
                 <img src="{{ asset($page->featured_image) }}" alt="{{ $page->title }}"
-                    style="width:100%; max-height:500px; object-fit:cover;">
-            </
-        @endif
+                    style="width:100%; max-height:500px; object-fit:cover;" fetchpriority="high" decoding="async"
+                    loading="lazy"
+                    >
+                </ @endif
 
-        <div class="static-page-content">
-            {!! $page->content !!}
-        </div>
+                <div class="static-page-content">
+                    {!! $page->content !!}
+                </div>
 
-        <div class="mt-5">
-            <a href="{{ route('home') }}" class="text-link">
-                ← Back to Home
-            </a>
-        </div>
+                <div class="mt-5">
+                    <a href="{{ route('home') }}" class="text-link">
+                        ← Back to Home
+                    </a>
+                </div>
 
     </section>
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\StaticPages\Schemas;
 
+use App\Services\ImageOptimizer;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -28,8 +29,8 @@ class StaticPageForm
                         ->maxLength(255)
                         ->live(onBlur: true)
                         ->afterStateUpdated(
-                            fn (Set $set, ?string $state) =>
-                                $set('slug', Str::slug($state ?? ''))
+                            fn(Set $set, ?string $state) =>
+                            $set('slug', Str::slug($state ?? ''))
                         ),
 
                     TextInput::make('slug')
@@ -52,7 +53,16 @@ class StaticPageForm
                         ->disk('public_uploads')
                         ->directory('images/pages')
                         ->visibility('public')
-                        ->maxSize(4096),
+                        ->maxSize(4096)
+                        ->saveUploadedFileUsing(
+                            fn($file): string => app(ImageOptimizer::class)->optimize(
+                                $file,
+                                'images/pages',
+                                2000,
+                                2000,
+                                80
+                            )
+                        ),
 
                 ]),
 

@@ -22,7 +22,8 @@ class DesignsTable
                 ImageColumn::make('featured_image')
                     ->label('Image')
                     ->disk('public_uploads')
-                    ->square(),
+                    ->square()
+                    ->size(80),
 
                 TextColumn::make('title')
                     ->label('Design Title')
@@ -46,7 +47,7 @@ class DesignsTable
 
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'published' => 'success',
                         'draft' => 'warning',
                         'archived' => 'gray',
