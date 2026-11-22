@@ -124,5 +124,5 @@ return [
     ],
     
     'admin_email' => env('ADMIN_EMAIL'),
-
+    'public_path' => env('PUBLIC_PATH'),
 ];

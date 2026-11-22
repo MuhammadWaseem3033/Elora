@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $publicPath = config('app.public_path');
+
+        if ($publicPath) {
+            $this->app->usePublicPath($publicPath);
+        }
     }
 }

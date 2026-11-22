@@ -15,4 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })->create()
+    ->usePublicPath(
+        env('PUBLIC_PATH') ?: dirname(__DIR__) . '/public'
+    );
