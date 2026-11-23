@@ -158,14 +158,14 @@ img {
 }
 
 .section {
-    padding: 70px 0
+    padding: 60px 0
 }
 
 .section-head {
     display: flex;
     justify-content: space-between;
     align-items: end;
-    margin-bottom: 26px;
+    margin-bottom: 20px;
     gap: 20px
 }
 
@@ -184,40 +184,80 @@ img {
 .grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 18px
+    gap: 15px
 }
 
 .grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px
+    gap: 15px
 }
 
 .category-card {
     position: relative;
-    overflow: hidden
+    height: 360px;
+    overflow: hidden;
+    border-radius: 4px;
+    opacity: 1;
+    transform: translateX(-60px);
+    animation: categorySlideIn 0.8s ease forwards;
+}
+
+.category-card:nth-child(even) {
+    transform: translateX(60px);
+}
+
+.category-card:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.category-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.category-card:nth-child(4) {
+    animation-delay: 0.45s;
 }
 
 .category-card img {
-    height: 360px;
-    transition: .4s
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: transform 0.5s ease;
 }
 
 .category-card:hover img {
-    transform: scale(1.04)
+    transform: scale(1.05);
+}
+
+@keyframes categorySlideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .category-card {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
 }
 
 .card-label {
     position: absolute;
     bottom: 15px;
-    left: 15px;
+    /* left: 15px; */
     background: var(--paper);
     padding: 12px 16px;
-    min-width: 65%
+    min-width: 100%
 }
 
 .card-label span {
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: .18em;
     color: var(--gold);
     text-transform: uppercase
@@ -226,7 +266,7 @@ img {
 .card-label h3,
 .design-card h3,
 .story-card h3 {
-    font: 23px var(--serif);
+    font: 28px var(--serif);
     color: var(--wine);
     margin: 3px 0
 }
@@ -242,7 +282,7 @@ img {
 }
 
 .story-card img {
-    height: 240px
+    height: 240px;
 }
 
 .text-link {
@@ -426,6 +466,94 @@ img {
     padding-top: 15px;
     font-size: 10px;
     color: #a99d91
+}
+
+/* ÉLORA Mobile Header */
+/* Desktop: Search right side */
+@media (min-width: 768px) {
+    .nav-wrap .nav {
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    .nav .elora-header-search {
+        margin-left: 15px;
+    }
+
+    .menu-btn {
+        display: none;
+    }
+}
+
+/* Mobile Header */
+@media (max-width: 767px) {
+
+    .nav-wrap {
+        min-height: 68px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
+    .brand {
+        font-size: 26px;
+        flex-shrink: 0;
+    }
+
+    .menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin-left: auto;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    .nav-wrap .nav {
+        display: none;
+    }
+
+    .nav-wrap .nav.open {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        padding: 22px;
+        background: var(--bg);
+        z-index: 1001;
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        max-height: 75vh;
+        overflow-y: auto;
+    }
+
+    .nav-wrap .nav.open a {
+        display: block;
+    }
+
+    .nav .elora-header-search {
+        display: flex;
+        width: 100%;
+        margin: 8px 0 0;
+        position: static;
+    }
+
+    .nav .elora-header-search input {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .nav .elora-header-search button {
+        flex-shrink: 0;
+    }
 }
 
 @media(max-width:900px) {
@@ -941,5 +1069,84 @@ body.lightbox-active {
     .elora-header-search button {
         width: 28px;
         height: 28px;
+    }
+}
+
+/* Journal Cards Animation */
+
+.journal-animated-grid .story-card {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+/* Right side se aane wale cards */
+.journal-animated-grid .story-card:nth-child(even) {
+    transform: translateX(60px);
+}
+
+/* Animation delay */
+.journal-animated-grid .story-card:nth-child(2) {
+    transition-delay: 0.15s;
+}
+
+.journal-animated-grid .story-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+/* Visible animation */
+.journal-animated-grid .story-card.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Image hover animation */
+.journal-animated-grid .story-card img {
+    transition: transform 0.5s ease;
+}
+
+.journal-animated-grid .story-card:hover img {
+    transform: scale(1.04);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .journal-animated-grid .story-card {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+
+.hero-image {
+    position: relative;
+    overflow: hidden;
+    min-height: 550px;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.hero-slide.active {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-slide {
+        transition: none;
     }
 }

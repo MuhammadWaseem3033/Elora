@@ -142,7 +142,11 @@ class DesignForm
                                 FileUpload::make('image')
                                     ->label('Image')
                                     ->image()
-                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                    ->acceptedFileTypes([
+                                        'image/jpeg',
+                                        'image/png',
+                                        'image/webp',
+                                    ])
                                     ->disk('public_uploads')
                                     ->directory('images/designs/gallery')
                                     ->visibility('public')
@@ -150,9 +154,9 @@ class DesignForm
                                     ->saveUploadedFileUsing(
                                         fn($file): string => app(ImageOptimizer::class)->optimize(
                                             $file,
-                                            'images/designs',
-                                            2000,
-                                            2000,
+                                            'images/designs/gallery',
+                                            1200,
+                                            1200,
                                             80
                                         )
                                     )

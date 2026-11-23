@@ -112,8 +112,8 @@ class ArticleForm
                                 fn($file): string => app(ImageOptimizer::class)->optimize(
                                     $file,
                                     'images/articles',
-                                    2000,
-                                    2000,
+                                    1200,
+                                    1200,
                                     80
                                 )
                             ),

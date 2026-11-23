@@ -27,8 +27,15 @@
             </a>
         </div>
 
-        <div class="hero-image"
+        {{-- <div class="hero-image"
             style="background-image:url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1400&q=90')">
+        </div> --}}
+        <div class="hero-image" id="heroImage">
+            @foreach ($featuredDesigns->filter(fn($design) => filled($design->featured_image)) as $design)
+                <div class="hero-slide {{ $loop->first ? 'active' : '' }}"
+                    style="background-image: url('{{ asset($design->featured_image) }}');" role="img"
+                    aria-label="{{ $design->title }}"></div>
+            @endforeach
         </div>
 
     </section>
@@ -51,18 +58,14 @@
 
         </div>
 
-        <div class="grid-4">
+        <div class="grid-3">
 
             @forelse($categories as $category)
                 <a class="category-card" href="{{ url('/category/' . $category->slug) }}">
 
                     @if ($category->image)
-                        <img
-                            src="{{ asset($category->image) }}"
-                            alt="{{ $category->name }}"
-                            loading="lazy"
-                            decoding="async"
-                        >
+                        <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" loading="lazy"
+                            decoding="async">
                     @endif
 
                     <div class="card-label">
@@ -110,18 +113,14 @@
 
         </div>
 
-        <div class="grid-3">
+        <div class="grid-3 journal-animated-grid">
 
             @forelse($articles as $article)
                 <a class="story-card" href="{{ url('/journal/' . $article->slug) }}">
 
                     @if ($article->featured_image)
-                        <img
-                            src="{{ asset($article->featured_image) }}"
-                            alt="{{ $article->title }}"
-                            loading="lazy"
-                            decoding="async"
-                        >
+                        <img src="{{ asset($article->featured_image) }}" alt="{{ $article->title }}" loading="lazy"
+                            decoding="async">
                     @endif
 
                     <span class="meta">
@@ -160,4 +159,54 @@
 
     </section>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const journalCards = document.querySelectorAll(
+                '.journal-animated-grid .story-card'
+            );
+
+            if (!('IntersectionObserver' in window)) {
+                journalCards.forEach(card => card.classList.add('show'));
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+
+                        observer.unobserve(entry.target);
+                    }
+
+                });
+
+            }, {
+                threshold: 0.1
+            });
+
+            journalCards.forEach(card => {
+                observer.observe(card);
+            });
+
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('#heroImage .hero-slide');
+
+            if (slides.length <= 1) return;
+
+            let currentSlide = 0;
+
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+
+                currentSlide = (currentSlide + 1) % slides.length;
+
+                slides[currentSlide].classList.add('active');
+            }, 60000);
+        });
+    </script>
 @endsection
