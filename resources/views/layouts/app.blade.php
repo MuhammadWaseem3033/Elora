@@ -144,7 +144,6 @@
     <script src="{{ asset('js/main.js') }}" defer></script>
 
     @stack('scripts')
-
 </body>
 
 </html>

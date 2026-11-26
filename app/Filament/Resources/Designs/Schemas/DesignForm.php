@@ -113,7 +113,9 @@ class DesignForm
                             ->default(false),
 
                         DateTimePicker::make('published_at')
-                            ->label('Publication Date'),
+                            ->label('Publication Date')
+                            ->timezone('Asia/Karachi')
+                            ->helperText('Publication date and time in Pakistan Standard Time.'),
 
                         TextInput::make('sort_order')
                             ->numeric()
