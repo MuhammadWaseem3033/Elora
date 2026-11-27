@@ -50,11 +50,16 @@
                     @endforeach
 
                     <a href="{{ url('/sitemap.xml') }}">Sitemap</a>
+                    @if (app()->environment('production') && config('services.google_analytics.measurement_id'))
+                        <a href="#cookie-settings" id="openCookieSettings">
+                            Cookie Settings
+                        </a>
+                    @endif
                 </div>
             </div>
 
         </div>
-        
+
         @include('partials.newsletter-form')
         <div class="copyright">
             © {{ date('Y') }} ÉLORA Style Journal.

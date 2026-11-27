@@ -1150,3 +1150,98 @@ body.lightbox-active {
         transition: none;
     }
 }
+
+/* ========================================
+   ÉLORA Cookie Consent Banner
+======================================== */
+
+.cookie-consent {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    width: 420px;
+    max-width: calc(100% - 50px);
+    padding: 25px;
+    background: #f8f2eb;
+    border: 1px solid #dfd2c5;
+    border-top: 4px solid #603342;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    z-index: 9999;
+}
+
+.cookie-consent[hidden] {
+    display: none !important;
+}
+
+.cookie-consent h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #603342;
+    margin-bottom: 12px;
+}
+
+.cookie-consent p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.cookie-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.cookie-actions button {
+    flex: 1;
+    padding: 12px 10px;
+    font-size: 13px;
+    font-weight: 500;
+    background: transparent;
+    color: #603342;
+    border: 1px solid #603342;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cookie-actions button:hover {
+    background: #603342;
+    color: #fff;
+}
+
+.cookie-actions button:focus-visible {
+    outline: 2px solid #603342;
+    outline-offset: 3px;
+}
+
+/* Mobile Responsive */
+
+@media (max-width: 576px) {
+    .cookie-consent {
+        bottom: 12px;
+        left: 12px;
+        width: calc(100% - 24px);
+        max-width: none;
+        padding: 20px;
+    }
+
+    .cookie-consent h3 {
+        font-size: 21px;
+    }
+
+    .cookie-actions {
+        flex-direction: column;
+    }
+}
+
+.cookie-privacy-link {
+    color: #603342;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.cookie-privacy-link:hover {
+    color: #8b4b60;
+}

@@ -106,10 +106,53 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}">
     @stack('styles')
 </head>
+{{-- Google Analytics GA4 --}}
+@if (app()->environment('production') && config('services.google_analytics.measurement_id'))
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied'
+        });
+
+        function initializeAnalytics() {
+            if (window.eloraAnalyticsInitialized) return;
+
+            window.eloraAnalyticsInitialized = true;
+
+            gtag('consent', 'update', {
+                'analytics_storage': 'granted'
+            });
+
+            const measurementId = @json(config('services.google_analytics.measurement_id'));
+
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
+
+            document.head.appendChild(script);
+
+            gtag('js', new Date());
+
+            gtag('config', measurementId, {
+                'allow_google_signals': false,
+                'allow_ad_personalization_signals': false
+            });
+        }
+    </script>
+@endif
 
 <body>
 
     @includeIf('partials.header')
+    @includeIf('partials.cookie-consent')
 
     <main id="page-content">
         @yield('content')
