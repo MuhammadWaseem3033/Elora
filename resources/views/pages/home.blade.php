@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Home | ÉLORA')
+@section('title', "ÉLORA | Women's Fashion, Style & Latest Fashion Trends")
 
 @section('meta_description',
-    'ÉLORA — an independent fashion and lifestyle journal. Discover fashion designs, styling
-    notes and editorial stories.')
+    "Discover the latest women's fashion trends, elegant designs, 
+    bridal collections, styling inspiration and editorial stories at ÉLORA.")
 
 @section('content')
 

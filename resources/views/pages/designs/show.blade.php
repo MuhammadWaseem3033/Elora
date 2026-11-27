@@ -2,12 +2,14 @@
 
 @section('title', $design->meta_title ?: $design->title . ' | ÉLORA')
 
-@section('meta_description', $design->meta_description ?: $design->short_description)
-
+@section('meta_description', $design->meta_description ?: ($design->short_description ?: 'Discover ' . $design->title .
+    ' and explore fashion inspiration at ÉLORA.'))
 
 @section('canonical_url', route('design.show', $design->slug))
 
-@section('meta_image', $design->featured_image ? asset($design->featured_image) : '')
+@section('meta_image', asset($design->featured_image && is_file(public_path($design->featured_image)) ?
+    $design->featured_image : ($design->category->image && is_file(public_path($design->category->image)) ?
+    $design->category->image : 'images/seo/elora-og.jpg')))
 
 @section('og_type', 'article')
 
@@ -19,7 +21,10 @@
         'description' => $design->short_description ?: $design->title,
         'url' => route('design.show', $design->slug),
         'image' => $design->featured_image ? asset($design->featured_image) : null,
-        'creator' => $design->designer ?: 'ÉLORA Editorial Team',
+        'creator' => [
+            '@type' => $design->designer ? 'Person' : 'Organization',
+            'name' => $design->designer ?: 'ÉLORA Editorial Team',
+        ],
         'genre' => $design->category->name,
         'publisher' => [
             '@type' => 'Organization',
@@ -98,12 +103,8 @@
 
                 @if ($design->featured_image)
                     <div class="mb-4">
-                        <img 
-                            src="{{ asset($design->featured_image) }}" 
-                            alt="{{ $design->title }}" fetchpriority="high"
-                            decoding="async" 
-                            style="width:100%; max-height:650px; object-fit:cover;"
-                        >
+                        <img src="{{ asset($design->featured_image) }}" alt="{{ $design->title }}" fetchpriority="high"
+                            decoding="async" style="width:100%; max-height:650px; object-fit:cover;">
                         {{-- <img src="{{ asset($design->featured_image) }}" alt="{{ $design->title }}"
                             style="width:100%; max-height:650px; object-fit:cover;"> --}}
                     </div>
@@ -115,13 +116,8 @@
 
                         @foreach ($design->images as $image)
                             <div class="col-md-6">
-                                <img
-                                    src="{{ asset($image->image) }}"
-                                    alt="{{ $image->alt_text ?: $design->title }}"
-                                    loading="lazy"
-                                    decoding="async"
-                                    style="width:100%; height:350px; object-fit:cover;"
-                                >
+                                <img src="{{ asset($image->image) }}" alt="{{ $image->alt_text ?: $design->title }}"
+                                    loading="lazy" decoding="async" style="width:100%; height:350px; object-fit:cover;">
                                 {{-- <img src="{{ asset($image->image) }}" alt="{{ $image->alt_text ?: $design->title }}"
                                     loading="lazy" style="width:100%; height:350px; object-fit:cover;"> --}}
                             </div>

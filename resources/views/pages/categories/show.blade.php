@@ -1,7 +1,16 @@
 @extends('layouts.app')
 
-@section('title', $category->name . ' | ÉLORA')
-@section('meta_description', $category->description ?: 'Explore ' . $category->name . ' fashion designs at ÉLORA.')
+@section('title', $category->name . ' | Fashion & Style | ÉLORA')
+
+@section('meta_description', $category->description ?: 'Explore the latest ' . $category->name . ' fashion designs,
+    styling ideas and fashion inspiration at ÉLORA.')
+
+@section('canonical_url', route('category.show', $category->slug))
+
+@section('og_type', 'website')
+
+@section('meta_image', asset($category->image && file_exists(public_path($category->image)) ? $category->image :
+    'images/seo/elora-og.jpg'))
 
 @section('content')
     @include('partials.advertisements', ['placement' => 'category_top'])
@@ -40,12 +49,7 @@
                             @endphp
 
                             @if ($image)
-                                <img 
-                                    src="{{ asset($image) }}" 
-                                    alt="{{ $design->title }}" 
-                                    loading="lazy"
-                                    decoding="async"
-                                >
+                                <img src="{{ asset($image) }}" alt="{{ $design->title }}" loading="lazy" decoding="async">
                             @endif
 
                             <span class="meta">

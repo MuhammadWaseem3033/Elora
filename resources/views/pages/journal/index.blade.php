@@ -1,43 +1,50 @@
 @extends('layouts.app')
 
-@section('title', ($selectedCategory?->name ?? 'The Journal') . ' | ÉLORA')
+@section('title', $selectedCategory ? $selectedCategory->name . ' | Fashion Journal | ÉLORA' : 'Fashion Journal | Latest
+    Fashion Trends & Style Tips | ÉLORA')
 
-@section('meta_description',
-    $selectedCategory?->description ?:
-    'Explore fashion stories, style inspiration and
-    editorial perspectives at ÉLORA.')
+@section('meta_description', $selectedCategory ? ($selectedCategory->description ?: 'Discover the latest ' .
+    $selectedCategory->name . ' stories, fashion trends and styling inspiration at ÉLORA.') : 'Explore the latest fashion
+    trends, styling tips, designer collections, bridal inspiration and exclusive editorial stories at ÉLORA.')
 
-    @push('styles')
-        <style>
-            .journal-categories {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 12px;
-                align-items: center;
-                margin: 25px 0 35px;
-            }
+@section('canonical_url', $articles->currentPage() > 1 ? $articles->url($articles->currentPage()) : ($selectedCategory ?
+    route('journal.category', $selectedCategory->slug) : route('journal.index')))
 
-            .journal-categories a {
-                display: inline-block;
-                padding: 10px 20px;
-                border: 1px solid #dfd2c5;
-                color: #603342;
-                text-decoration: none;
-                font-size: 13px;
-                transition: .3s ease;
-            }
+@section('meta_image', asset('images/seo/elora-og.jpg'))
 
-            .journal-categories a:hover,
-            .journal-categories a.active {
-                background: #603342;
-                border-color: #603342;
-                color: #fff;
-            }
-        </style>
-    @endpush
+@section('og_type', 'website')
+
+@push('styles')
+    <style>
+        .journal-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin: 25px 0 35px;
+        }
+
+        .journal-categories a {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid #dfd2c5;
+            color: #603342;
+            text-decoration: none;
+            font-size: 13px;
+            transition: .3s ease;
+        }
+
+        .journal-categories a:hover,
+        .journal-categories a.active {
+            background: #603342;
+            border-color: #603342;
+            color: #fff;
+        }
+    </style>
+@endpush
 
 @section('content')
-@include('partials.advertisements', ['placement' => 'journal_top'])
+    @include('partials.advertisements', ['placement' => 'journal_top'])
     <section class="page-hero">
         <span class="eyebrow">ÉLORA / Notes & Perspectives</span>
 
@@ -94,12 +101,8 @@
                         <article class="design-card" data-searchable>
 
                             @if ($article->featured_image)
-                                <img 
-                                    src="{{ asset($article->featured_image) }}" 
-                                    alt="{{ $article->title }}" 
-                                    loading="lazy"
-                                    decoding="async"
-                                >
+                                <img src="{{ asset($article->featured_image) }}" alt="{{ $article->title }}" loading="lazy"
+                                    decoding="async">
                             @endif
 
                             <span class="meta">

@@ -2,12 +2,18 @@
 
 @section('title', $article->meta_title ?: $article->title . ' | ÉLORA')
 
-@section('meta_description', $article->meta_description ?: $article->excerpt)
-
+@section('meta_description',
+    $article->meta_description ?:
+    ($article->excerpt ?:
+    'Read ' .
+    $article->title .
+    ' and
+    discover fashion trends, style inspiration and editorial stories at ÉLORA.'))
 
 @section('canonical_url', route('journal.show', $article->slug))
 
-@section('meta_image', $article->featured_image ? asset($article->featured_image) : '')
+@section('meta_image', asset($article->featured_image && is_file(public_path($article->featured_image)) ?
+    $article->featured_image : 'images/seo/elora-og.jpg'))
 
 @section('og_type', 'article')
 
@@ -22,7 +28,7 @@
         'datePublished' => $article->published_at ? $article->published_at->toAtomString() : null,
         'dateModified' => $article->updated_at->toAtomString(),
         'author' => [
-            '@type' => 'Person',
+            '@type' => $article->author && $article->author !== 'ÉLORA Editorial Team' ? 'Person' : 'Organization',
             'name' => $article->author ?: 'ÉLORA Editorial Team',
         ],
         'publisher' => [
@@ -36,7 +42,7 @@
         ],
     ];
 
-    $articleSchemaJson = json_encode($articleSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $articleSchemaJson = json_encode($articleSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG);
 
     $articleBreadcrumb = [
         '@context' => 'https://schema.org',
@@ -63,17 +69,22 @@
         ],
     ];
 
-    $articleBreadcrumbJson = json_encode($articleBreadcrumb, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    $articleBreadcrumbJson = json_encode(
+        $articleBreadcrumb,
+        JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG,
+    );
+
 @endphp
 
-<script type="application/ld+json">
-    {!! $articleSchemaJson !!}
-</script>
+@push('scripts')
+    <script type="application/ld+json">
+        {!! $articleSchemaJson !!}
+    </script>
 
-<script type="application/ld+json">
-    {!! $articleBreadcrumbJson !!}
-</script>
-
+    <script type="application/ld+json">
+        {!! $articleBreadcrumbJson !!}
+    </script>
+@endpush
 
 @section('content')
     @include('partials.advertisements', ['placement' => 'journal_detail_top'])
@@ -149,13 +160,9 @@
                     <a href="{{ route('journal.show', $related->slug) }}" class="design-card">
 
                         @if ($related->featured_image)
-                            <img 
-                                src="{{ asset($related->featured_image) }}" 
-                                alt="{{ $related->title }}"
-                                loading="lazy" 
-                                decoding="async"
-                            >
-                        @endif                       
+                            <img src="{{ asset($related->featured_image) }}" alt="{{ $related->title }}" loading="lazy"
+                                decoding="async">
+                        @endif
 
                         <span class="meta">
                             {{ $related->blogCategory?->name }}
