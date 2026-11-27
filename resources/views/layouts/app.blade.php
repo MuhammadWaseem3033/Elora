@@ -1,51 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>@yield('title', 'ÉLORA | Fashion & Style')</title>
-
-    <meta name="description" content="@yield('meta_description', 'Explore the world of women’s fashion, elegant designs, fashion shows and style inspiration at ÉLORA.')">
-
-    <meta name="robots" content="index, follow">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
-    @stack('styles')
-</head>
-
-<body>
-
-    @includeIf('partials.header')
-
-    <main id="page-content">
-        @yield('content')
-    </main>
-
-    @includeIf('partials.footer')
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="{{ asset('js/main.js') }}" defer></script>
-
-    @stack('scripts')
-
-</body>
-
-</html> --}}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,16 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     @php
-        $seoTitle = trim($__env->yieldContent('title', 'ÉLORA | Fashion & Style'));
-        $seoDescription = trim(
-            $__env->yieldContent(
-                'meta_description',
-                'Explore the world of women’s fashion, elegant designs, fashion shows and style inspiration at ÉLORA.',
+        $seoTitle = trim(
+            html_entity_decode(
+                $__env->yieldContent('title', 'ÉLORA | Fashion & Style'),
+                ENT_QUOTES | ENT_HTML5,
+                'UTF-8',
             ),
         );
-        $seoCanonical = trim($__env->yieldContent('canonical_url', url()->current()));
-        $seoImage = trim($__env->yieldContent('meta_image', ''));
+
+        $seoDescription = trim(
+            html_entity_decode(
+                $__env->yieldContent(
+                    'meta_description',
+                    'Explore the world of women’s fashion, elegant designs, fashion shows and style inspiration at ÉLORA.',
+                ),
+                ENT_QUOTES | ENT_HTML5,
+                'UTF-8',
+            ),
+        );
+
+        $seoCanonical = trim(
+            html_entity_decode(
+                $__env->yieldContent('canonical_url', url()->current()),
+                ENT_QUOTES | ENT_HTML5,
+                'UTF-8',
+            ),
+        );
+
+        $seoImage = trim(html_entity_decode($__env->yieldContent('meta_image', ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+
+        $seoImage = $seoImage ?: asset('images/seo/elora-og.jpg');
+
         $seoRobots = trim($__env->yieldContent('robots', 'index, follow'));
+
         $seoType = trim($__env->yieldContent('og_type', 'website'));
     @endphp
 
@@ -108,7 +83,10 @@
             'inLanguage' => 'en',
         ];
 
-        $websiteSchemaJson = json_encode($websiteSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        $websiteSchemaJson = json_encode(
+            $websiteSchema,
+            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG,
+        );
     @endphp
 
     <script type="application/ld+json">

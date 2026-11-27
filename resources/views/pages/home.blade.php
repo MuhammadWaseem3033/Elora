@@ -2,9 +2,14 @@
 
 @section('title', "ÉLORA | Women's Fashion, Style & Latest Fashion Trends")
 
-@section('meta_description',
-    "Discover the latest women's fashion trends, elegant designs, 
-    bridal collections, styling inspiration and editorial stories at ÉLORA.")
+@section('meta_description', "Discover the latest women's fashion trends, elegant designs, bridal collections, styling
+    inspiration and editorial stories at ÉLORA.")
+
+@section('canonical_url', url('/'))
+
+@section('meta_image', asset('images/seo/elora-og.jpg'))
+
+@section('og_type', 'website')
 
 @section('content')
 
@@ -27,9 +32,6 @@
             </a>
         </div>
 
-        {{-- <div class="hero-image"
-            style="background-image:url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1400&q=90')">
-        </div> --}}
         <div class="hero-image" id="heroImage">
             @foreach ($featuredDesigns->filter(fn($design) => filled($design->featured_image)) as $design)
                 <div class="hero-slide {{ $loop->first ? 'active' : '' }}"
