@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
-@section('title', $category->name . ' | Fashion & Style | ÉLORA')
+@section('title', $category->meta_title ?: $category->name . ' | Fashion & Style | ÉLORA')
 
-@section('meta_description', $category->description ?: 'Explore the latest ' . $category->name . ' fashion designs,
-    styling ideas and fashion inspiration at ÉLORA.')
-
+@section('meta_description', $category->meta_description ?: ($category->description ?: 'Explore the latest ' .
+    $category->name . ' fashion designs, styling ideas and fashion inspiration at ÉLORA.'))
 @section('canonical_url', route('category.show', $category->slug))
 
 @section('og_type', 'website')
@@ -44,12 +43,24 @@
                 @foreach ($category->designs as $design)
                     <article class="design-card" data-searchable>
                         <a href="{{ route('design.show', $design->slug) }}">
-                            @php
+                            {{-- @php
                                 $image = $design->featured_image ?: $category->image;
                             @endphp
 
                             @if ($image)
                                 <img src="{{ asset($image) }}" alt="{{ $design->title }}" loading="lazy" decoding="async">
+                            @endif --}}
+                            @php
+                                $image = $design->featured_image ?: $category->image;
+
+                                $imageAlt = $design->featured_image
+                                    ? $design->title
+                                    : ($category->image_alt ?:
+                                    $category->name);
+                            @endphp
+
+                            @if ($image)
+                                <img src="{{ asset($image) }}" alt="{{ $imageAlt }}" loading="lazy" decoding="async">
                             @endif
 
                             <span class="meta">

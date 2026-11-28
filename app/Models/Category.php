@@ -15,6 +15,10 @@ class Category extends Model
         'description',
         'is_active',
         'sort_order',
+        // seo field ...
+        'meta_title',
+        'meta_description',
+        'image_alt',
     ];
 
     protected function casts(): array

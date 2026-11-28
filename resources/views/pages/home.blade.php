@@ -2,7 +2,8 @@
 
 @section('title', "ÉLORA | Women's Fashion, Style & Latest Fashion Trends")
 
-@section('meta_description', "Discover the latest women's fashion trends, elegant designs, bridal collections, styling
+@section('meta_description',
+    "Discover the latest women's fashion trends, elegant designs, bridal collections, styling
     inspiration and editorial stories at ÉLORA.")
 
 @section('canonical_url', url('/'))
@@ -54,9 +55,10 @@
             </div>
 
             <p>
-                Four perspectives on personal style, from wardrobe
-                foundations to finishing details.
-            </p>
+                Explore curated fashion inspiration, from everyday outfit ideas
+                and elegant dresses to bridal fashion, luxury style,
+                seasonal trends and timeless accessories.
+            </p>                                                
 
         </div>
 
@@ -64,10 +66,9 @@
 
             @forelse($categories as $category)
                 <a class="category-card" href="{{ url('/category/' . $category->slug) }}">
-
                     @if ($category->image)
-                        <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" loading="lazy"
-                            decoding="async">
+                        <img src="{{ asset($category->image) }}" alt="{{ $category->image_alt ?: $category->name }}"
+                            loading="lazy" decoding="async">
                     @endif
 
                     <div class="card-label">

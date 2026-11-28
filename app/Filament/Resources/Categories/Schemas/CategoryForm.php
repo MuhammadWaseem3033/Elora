@@ -38,22 +38,6 @@ class CategoryForm
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
-
-                        // FileUpload::make('image')
-                        //     ->label('Category Image')
-                        //     ->image()
-                        //     ->acceptedFileTypes([
-                        //         'image/jpeg',
-                        //         'image/jpg',
-                        //         'image/png',
-                        //         'image/webp',
-                        //     ])
-                        //     ->maxSize(2048)
-                        //     ->disk('public_uploads')
-                        //     ->directory('images/categories')
-                        //     ->visibility('public')
-                        //     ->imagePreviewHeight('150')
-                        //     ->required(),
                         FileUpload::make('image')
                             ->label('Category Image')
                             ->image()
@@ -111,6 +95,36 @@ class CategoryForm
                             ->required(),
                     ])
                     ->columns(2),
+                // SEO Information
+                Section::make('SEO Information')
+                    ->description('Optimize this category for search engines and image accessibility.')
+                    ->schema([
+
+                        TextInput::make('meta_title')
+                            ->label('Meta Title')
+                            ->placeholder('Enter SEO-friendly category title')
+                            ->maxLength(255)
+                            ->helperText('Recommended length: 50–60 characters.')
+                            ->columnSpanFull(),
+
+                        Textarea::make('meta_description')
+                            ->label('Meta Description')
+                            ->placeholder('Enter SEO-friendly category description')
+                            ->rows(3)
+                            ->maxLength(500)
+                            ->helperText('Recommended length: 140–160 characters.')
+                            ->columnSpanFull(),
+
+                        TextInput::make('image_alt')
+                            ->label('Image Alt Text')
+                            ->placeholder('Describe the category image')
+                            ->maxLength(255)
+                            ->helperText('Write a natural description of the category image.')
+                            ->columnSpanFull(),
+
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull(),
             ]);
     }
 }
